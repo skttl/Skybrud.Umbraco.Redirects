@@ -12,7 +12,8 @@
         rootNodeId: 0,
         url: '',
 		link: null,
-		isRegex: false
+		isRegex: false,
+		forwardQueryString: false
     };
 
     $scope.rootNodes = [
@@ -95,7 +96,8 @@
             linkId: $scope.redirect.link.id,
             linkUrl: $scope.redirect.link.url,
 			linkName: $scope.redirect.link.name,
-			isRegex: $scope.redirect.isRegex
+			isRegex: $scope.redirect.isRegex,
+			forwardQueryString: $scope.redirect.forwardQueryString
         };
 
         $scope.loading = true;

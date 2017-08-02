@@ -59,8 +59,8 @@ namespace Skybrud.Umbraco.Redirects.Models {
         /// <param name="url">The inbound URL to match.</param>
         /// <param name="destionation">An instance of <see cref="RedirectLinkItem"/> representing the destination link.</param>
         /// <returns>An instance of <see cref="RedirectItem"/> representing the created redirect.</returns>
-        public RedirectItem AddRedirect(int rootNodeId, string url, RedirectLinkItem destionation, bool isRegex) {
-            return AddRedirect(rootNodeId, url, destionation, isRegex, true);
+        public RedirectItem AddRedirect(int rootNodeId, string url, RedirectLinkItem destionation, bool isRegex, bool forwardQueryString) {
+            return AddRedirect(rootNodeId, url, destionation, isRegex, forwardQueryString, true);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Skybrud.Umbraco.Redirects.Models {
         /// <param name="destionation">An instance of <see cref="RedirectLinkItem"/> representing the destination link.</param>
         /// <param name="permanent">Whether the redirect should be permanent (301) or temporary (302).</param>
         /// <returns>An instance of <see cref="RedirectItem"/> representing the created redirect.</returns>
-        public RedirectItem AddRedirect(int rootNodeId, string url, RedirectLinkItem destionation, bool isRegex, bool permanent) {
+        public RedirectItem AddRedirect(int rootNodeId, string url, RedirectLinkItem destionation, bool isRegex, bool forwardQueryString, bool permanent) {
 
             // Attempt to create the database table if it doesn't exist
             //try {
@@ -109,7 +109,8 @@ namespace Skybrud.Umbraco.Redirects.Models {
                 Created = DateTime.Now,
                 Updated = DateTime.Now,
                 IsPermanent = permanent,
-				IsRegex = isRegex
+				IsRegex = isRegex,
+				ForwardQueryString = forwardQueryString
             };
 
             // Attempt to add the redirect to the database
@@ -264,6 +265,14 @@ namespace Skybrud.Umbraco.Redirects.Models {
 			sql = new Sql().Select("*").From(RedirectItemRow.TableName).Where<RedirectItemRow>(x => x.RootNodeId == rootNodeId && x.IsRegex);
 			row = Database.Fetch<RedirectItemRow>(sql).FirstOrDefault(x => Regex.IsMatch(fullUrl, x.Url));
 			
+			if (row == null)
+			{
+				// no redirect found, try with forwardQueryString = true, and no querystring
+				sql = new Sql().Select("*").From(RedirectItemRow.TableName).Where<RedirectItemRow>(x => x.RootNodeId == rootNodeId && x.Url == url && x.ForwardQueryString);
+
+				// Make the call to the database
+				row = Database.FirstOrDefault<RedirectItemRow>(sql);
+			}
 			// Wrap the database row
 			return row == null ? null : new RedirectItem(row);
 
@@ -305,7 +314,7 @@ namespace Skybrud.Umbraco.Redirects.Models {
             if (!SchemaHelper.TableExist(RedirectItemRow.TableName)) return null;
 
             // Generate the SQL for the query
-            Sql sql = new Sql().Select("*").From(RedirectItemRow.TableName).Where<RedirectItemRow>(x => !x.IsRegex && x.Url == url && x.QueryString == queryString);
+            Sql sql = new Sql().Select("*").From(RedirectItemRow.TableName).Where<RedirectItemRow>(x => !x.IsRegex && x.Url == url && (x.QueryString == queryString || x.ForwardQueryString));
 
 			// Make the call to the database
 			var redirects = Database.Fetch<RedirectItemRow>(sql).Select(RedirectItem.GetFromRow).ToList();//.OrderBy(x => x.RootNodeId > 0 ? "0" : "1");

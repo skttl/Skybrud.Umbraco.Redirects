@@ -66,6 +66,7 @@
             linkId: $scope.redirect.link.id,
             linkUrl: $scope.redirect.link.url,
 			linkName: $scope.redirect.link.name,
+			forwardQueryString: $scope.redirect.forwardQueryString,
 			isRegex: $scope.redirect.isRegex
         };
 

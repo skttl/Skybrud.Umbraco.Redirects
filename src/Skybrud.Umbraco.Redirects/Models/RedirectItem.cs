@@ -169,13 +169,14 @@ namespace Skybrud.Umbraco.Redirects.Models {
         public EssentialsDateTime Updated {
             get { return _updated; }
             set { _updated = value ?? EssentialsDateTime.Zero; Row.Updated = _updated.UnixTimestamp; }
-        }
+		}
 
-        [JsonProperty("permanent")]
-        public bool IsPermanent {
-            get { return Row.IsPermanent; }
-            set { Row.IsPermanent = value; }
-        }
+		[JsonProperty("permanent")]
+		public bool IsPermanent
+		{
+			get { return Row.IsPermanent; }
+			set { Row.IsPermanent = value; }
+		}
 
 		[JsonProperty("isRegex")]
 		public bool IsRegex
@@ -183,12 +184,20 @@ namespace Skybrud.Umbraco.Redirects.Models {
 			get { return Row.IsRegex; }
 			set { Row.IsRegex = value; }
 		}
+		
+		[JsonProperty("forwardQueryString")]
+		public bool ForwardQueryString
+		{
+			get { return Row.ForwardQueryString; }
+			set { Row.ForwardQueryString = value; }
+		}
 
-        #endregion
 
-        #region Constructors
+		#endregion
 
-        internal RedirectItem(RedirectItemRow row) {
+		#region Constructors
+
+		internal RedirectItem(RedirectItemRow row) {
             _created = EssentialsDateTime.FromUnixTimestamp(row.Created);
             _updated = EssentialsDateTime.FromUnixTimestamp(row.Updated);
             _linkMode = EnumUtils.ParseEnum(row.LinkMode, RedirectLinkMode.Content);
