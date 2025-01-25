@@ -39,7 +39,7 @@ public class RedirectRootNodeModel {
         Key = content?.Key ?? redirect.RootKey;
         Name = content?.Name;
         Icon = content?.ContentType.Icon;
-        Domains = domains ?? Array.Empty<string>();
+        Domains = domains ?? [];
         BackOfficeUrl = $"{backOfficeBaseUrl}/#/content/content/edit/{Id}";
     }
 
@@ -48,7 +48,7 @@ public class RedirectRootNodeModel {
         Key = content?.Key ?? redirect.RootKey;
         Name = content?.Name;
         Icon = content?.ContentType.Icon;
-        Domains = domains ?? Array.Empty<string>();
+        Domains = domains ?? [];
         BackOfficeUrl = $"{backOffice.BackOfficeUrl}/#/content/content/edit/{Id}";
     }
 
