@@ -507,7 +507,7 @@ public class RedirectsService : IRedirectsService {
         // Get the fragment (if any)
         string fragment = redirect.Destination.Fragment;
 
-        // Merge the existing query string with the query string of "uri" (eg. from the inbound request)
+        // Merge the existing query string with the query string of "uri" (e.g. from the inbound request)
         if (uri != null && uri.Query.HasValue() && redirect.ForwardQueryString) query = MergeQueryString(query, uri.Query);
 
         // For content and media, we need to look up the most recent URL

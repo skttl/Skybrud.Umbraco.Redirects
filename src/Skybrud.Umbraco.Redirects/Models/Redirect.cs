@@ -48,7 +48,7 @@ public class Redirect : IRedirect {
     }
 
     /// <summary>
-    /// Gets or sets the inbound path of the redirect. The value value will not contain the domain or the query string.
+    /// Gets or sets the inbound path of the redirect. The value will not contain the domain or the query string.
     /// </summary>
     [JsonProperty("path")]
     [JsonPropertyName("path")]
@@ -76,18 +76,18 @@ public class Redirect : IRedirect {
 
         get => Dto.Path + (string.IsNullOrWhiteSpace(Dto.QueryString) ? null : "?" + QueryString);
 
-        set  {
+        set {
 
             if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
 
             // Remove the fragment
-            value.Split('#', out value!);
+            value.Split('#', out value);
 
             // Split the path and query
-            value.Split('?', out string? path, out string? query);
+            value.Split('?', out string path, out string? query);
 
             // Update the path and query
-            Path = path!;
+            Path = path;
             QueryString = query ?? string.Empty;
 
         }

@@ -16,7 +16,7 @@ public interface IOutboundRedirect : IRedirectBase {
     public bool HasDestination => IsValid;
 
     /// <summary>
-    /// Gets whether the redirects has a valid link.
+    /// Gets whether the redirect has a valid link.
     /// </summary>
     [JsonIgnore]
     public bool IsValid => Destination is { IsValid: true };

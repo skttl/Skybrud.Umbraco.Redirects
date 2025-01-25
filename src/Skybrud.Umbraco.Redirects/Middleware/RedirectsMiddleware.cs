@@ -65,13 +65,13 @@ public class RedirectsMiddleware {
                     _eventAggregator.Publish<IRedirectPreLookupNotification>(preLookup);
 
                     // Get the destination URL from the arguments (in case a value has been set
-                    // from an notification handler)
+                    // from a notification handler)
                     string? destinationUrl = preLookup.DestinationUrl;
 
                     // Declare a variable for the redirect (either from the pre lookup or a lookup via the service)
                     IRedirect? redirect = preLookup.Redirect ?? _redirectsService.GetRedirectByRequest(context.Request);
 
-                    // Return if we neither have a redirect or a destination URL
+                    // Return if we neither have a redirect nor a destination URL
                     if (redirect == null && string.IsNullOrWhiteSpace(destinationUrl)) return Task.CompletedTask;
 
                     // Determine the redirect type

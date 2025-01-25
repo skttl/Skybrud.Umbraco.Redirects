@@ -22,7 +22,7 @@ namespace Skybrud.Umbraco.Redirects.Extensions;
 /// </summary>
 public static class RedirectsExtensions {
 
-    private static readonly string[] _outboundPropertyAliases = { "skyRedirect", "outboundRedirect" };
+    private static readonly string[] _outboundPropertyAliases = ["skyRedirect", "outboundRedirect"];
 
     /// <summary>
     /// Returns the calculated destination URL for the specified <paramref name="redirect"/>.
@@ -143,7 +143,7 @@ public static class RedirectsExtensions {
                 return SetDestination(redirect, new RedirectDestination {
                     Id = content.Id,
                     Key = content.Key,
-                    Name = content.Name!,
+                    Name = content.Name,
                     Url = content.Url(),
                     Query = string.Empty,
                     Fragment = string.Empty,
@@ -154,7 +154,7 @@ public static class RedirectsExtensions {
                 return SetDestination(redirect, new RedirectDestination {
                     Id = content.Id,
                     Key = content.Key,
-                    Name = content.Name!,
+                    Name = content.Name,
                     Url = content.Url(),
                     Query = string.Empty,
                     Fragment = string.Empty,

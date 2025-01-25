@@ -33,7 +33,7 @@ public interface IRedirect : IRedirectBase {
     Guid RootKey { get; set; }
 
     /// <summary>
-    /// Gets or sets the inbound path of the redirect. The value value will not contain the domain or the query string.
+    /// Gets or sets the inbound path of the redirect. The value will not contain the domain or the query string.
     /// </summary>
     [JsonProperty("path")]
     [JsonPropertyName("path")]

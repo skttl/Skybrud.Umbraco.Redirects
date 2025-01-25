@@ -104,11 +104,11 @@ public class RedirectsBackOfficeHelper {
     /// </summary>
     /// <returns>An array of <see cref="IAccessRule"/>.</returns>
     public virtual IAccessRule[] GetDashboardAccessRules() {
-        return Array.Empty<IAccessRule>();
+        return [];
     }
 
     /// <summary>
-    /// Returns a cache buster value based both on Umbraco's own cache buster as well as the current version of
+    /// Returns a cache buster value based both on Umbraco's own cache buster and the current version of
     /// this package. This ensures a new cache buster value when either the ClientDependency version is bumped or
     /// the package is updated.
     /// </summary>
@@ -244,7 +244,7 @@ public class RedirectsBackOfficeHelper {
             // Initialize a new destination object
             destination = new RedirectDestinationModel(redirect, content);
 
-            // I the destination refers to a specific culture, we fetch some additional information about the culture
+            // If the destination refers to a specific culture, we fetch some additional information about the culture
             if (redirect.Destination.Culture.HasValue(out string? culture)) {
                 destination.Culture = culture;
                 if (languageLookup.TryGetValue(culture, out ILanguage? language)) {
@@ -304,7 +304,7 @@ public class RedirectsBackOfficeHelper {
     /// <summary>
     /// Returns the content app for the specified <paramref name="source"/>, or <c>null</c> if no content app should be shown.
     /// </summary>
-    /// <param name="source">The source - eg. an instance <see cref="IContent"/>.</param>
+    /// <param name="source">The source - e.g. an instance <see cref="IContent"/>.</param>
     /// <param name="userGroups">The user groups of the current user.</param>
     /// <returns>An instance of <see cref="ContentApp"/>, or <c>null</c> if no content app should be shown.</returns>
     public virtual ContentApp? GetContentAppFor(object source, IEnumerable<IReadOnlyUserGroup> userGroups) {

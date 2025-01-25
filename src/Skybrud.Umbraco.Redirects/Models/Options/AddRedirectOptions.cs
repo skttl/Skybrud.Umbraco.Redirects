@@ -59,7 +59,7 @@ public class AddRedirectOptions {
     }
 
     /// <summary>
-    /// Gets or sets the type of the redirect - eg. <see cref="RedirectType.Permanent"/> or <see cref="RedirectType.Temporary"/>.
+    /// Gets or sets the type of the redirect - e.g. <see cref="RedirectType.Permanent"/> or <see cref="RedirectType.Temporary"/>.
     /// </summary>
     [JsonProperty("type")]
     [JsonPropertyName("type")]

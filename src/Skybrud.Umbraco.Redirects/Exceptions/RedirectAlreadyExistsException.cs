@@ -7,7 +7,7 @@ using Umbraco.Cms.Core.Services;
 namespace Skybrud.Umbraco.Redirects.Exceptions;
 
 /// <summary>
-/// Class representing an exception thrown when the user tries to create a redirect for an URL that is already used by another redirect.
+/// Class representing an exception thrown when the user tries to create a redirect for a URL that is already used by another redirect.
 /// </summary>
 public class RedirectAlreadyExistsException : RedirectsLocalizedException {
 

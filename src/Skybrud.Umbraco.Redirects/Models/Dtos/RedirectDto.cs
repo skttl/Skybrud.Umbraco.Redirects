@@ -44,7 +44,7 @@ public class RedirectDto {
     public Guid RootKey { get; set; }
 
     /// <summary>
-    /// Gets the inbound path of the redirect. The value value will not contain the domain or the query.
+    /// Gets the inbound path of the redirect. The value will not contain the domain or the query.
     /// string.
     /// </summary>
     [Column("Url")]

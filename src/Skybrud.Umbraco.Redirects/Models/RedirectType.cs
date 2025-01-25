@@ -4,7 +4,7 @@ using MicrosoftJsonConverter = System.Text.Json.Serialization.JsonConverterAttri
 namespace Skybrud.Umbraco.Redirects.Models;
 
 /// <summary>
-/// Enum class indicating the type of a redirect - eg. <see cref="Permanent"/> or <see cref="Temporary"/>.
+/// Enum class indicating the type of a redirect - e.g. <see cref="Permanent"/> or <see cref="Temporary"/>.
 /// </summary>
 [NewtonsoftJsonConverter(typeof(Essentials.Json.Newtonsoft.Converters.Enums.EnumCamelCaseConverter))]
 [MicrosoftJsonConverter(typeof(Text.Json.Enums.EnumCamelCaseConverter))]

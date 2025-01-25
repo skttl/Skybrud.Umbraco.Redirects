@@ -32,7 +32,7 @@ public class OutboundRedirectReferenceFactory : IDataValueReferenceFactory, IDat
 
     public IEnumerable<UmbracoEntityReference> GetReferences(object? value) {
 
-        List<UmbracoEntityReference> references = new();
+        List<UmbracoEntityReference> references = [];
         if (value is not string json) return references;
 
         // Parse the raw JSON value

@@ -14,11 +14,11 @@ public class RedirectsContentAppSettings {
 
     /// <summary>
     /// Gets or sets a list of content types and media types where the content app should or should not be shown.
-    /// The format follows Umbraco's <c>show</c> option - eg. <c>+content/*</c> enables the content app for all
+    /// The format follows Umbraco's <c>show</c> option - e.g. <c>+content/*</c> enables the content app for all
     /// content.
     ///
     /// If empty, the content app will be enabled for all content and media.
     /// </summary>
-    public HashSet<string> Show { get; set; } = new();
+    public HashSet<string> Show { get; set; } = [];
 
 }

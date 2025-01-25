@@ -51,7 +51,7 @@ public class OutboundRedirect : JsonObjectBase, IOutboundRedirect {
     public bool HasDestination => IsValid;
 
     /// <summary>
-    /// Gets whether the redirects has a valid link.
+    /// Gets whether the redirect has a valid link.
     /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     [System.Text.Json.Serialization.JsonIgnore]

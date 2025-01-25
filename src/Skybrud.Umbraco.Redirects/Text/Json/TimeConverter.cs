@@ -34,23 +34,12 @@ public class TimeConverter : JsonConverter<object> {
     }
 
     public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
-
-        switch (reader.TokenType) {
-
-            case JsonTokenType.Null:
-                return null;
-
-            case JsonTokenType.Number:
-                return EssentialsTime.FromUnixTimeSeconds(reader.GetInt32());
-
-            case JsonTokenType.String:
-                return EssentialsTime.Parse(reader.GetString());
-
-            default:
-                throw new Exception($"Unsupported token type: {reader.TokenType}");
-
-        }
-
+        return reader.TokenType switch {
+            JsonTokenType.Null => (object?) null,
+            JsonTokenType.Number => EssentialsTime.FromUnixTimeSeconds(reader.GetInt32()),
+            JsonTokenType.String => EssentialsTime.Parse(reader.GetString()),
+            _ => throw new Exception($"Unsupported token type: {reader.TokenType}")
+        };
     }
 
     public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options) {
@@ -124,76 +113,37 @@ public class TimeConverter : JsonConverter<object> {
 
 
     internal static object ToFormat(DateTime value, TimeFormat format) {
-
-        switch (format) {
-
-            case TimeFormat.Iso8601:
-                return Iso8601Utils.ToString(value);
-
-            case TimeFormat.Rfc822:
-                return Rfc822Utils.ToString(value);
-
-            case TimeFormat.Rfc2822:
-                return Rfc2822Utils.ToString(value);
-
-            case TimeFormat.UnixTime:
-                return (long)UnixTimeUtils.ToSeconds(value);
-
-            default:
-                throw new ArgumentException("Unsupported format " + format, nameof(format));
-
-        }
-
+        return format switch {
+            TimeFormat.Iso8601 => Iso8601Utils.ToString(value),
+            TimeFormat.Rfc822 => Rfc822Utils.ToString(value),
+            TimeFormat.Rfc2822 => Rfc2822Utils.ToString(value),
+            TimeFormat.UnixTime => (long) UnixTimeUtils.ToSeconds(value),
+            _ => throw new ArgumentException("Unsupported format " + format, nameof(format))
+        };
     }
 
     internal static object ToFormat(EssentialsDate date, TimeFormat format) {
-
-        switch (format) {
-
-            case TimeFormat.Iso8601:
-                return date.Iso8601;
-
-            default:
-                throw new ArgumentException("Unsupported format " + format, nameof(format));
-
-        }
-
+        return format switch {
+            TimeFormat.Iso8601 => date.Iso8601,
+            _ => throw new ArgumentException("Unsupported format " + format, nameof(format))
+        };
     }
 
     internal static object ToFormat(DateTimeOffset value, TimeFormat format) {
-
-        switch (format) {
-
-            case TimeFormat.Iso8601:
-                return Iso8601Utils.ToString(value);
-
-            case TimeFormat.Rfc822:
-                return Rfc822Utils.ToString(value);
-
-            case TimeFormat.Rfc2822:
-                return Rfc2822Utils.ToString(value);
-
-            case TimeFormat.UnixTime:
-                return (long) UnixTimeUtils.ToSeconds(value);
-
-            default:
-                throw new ArgumentException("Unsupported format " + format, nameof(format));
-
-        }
-
+        return format switch {
+            TimeFormat.Iso8601 => Iso8601Utils.ToString(value),
+            TimeFormat.Rfc822 => Rfc822Utils.ToString(value),
+            TimeFormat.Rfc2822 => Rfc2822Utils.ToString(value),
+            TimeFormat.UnixTime => (long) UnixTimeUtils.ToSeconds(value),
+            _ => throw new ArgumentException("Unsupported format " + format, nameof(format))
+        };
     }
 
     internal static object ToFormat(EssentialsPartialDate value, TimeFormat format) {
-
-        switch (format) {
-
-            case TimeFormat.Iso8601:
-                return value.ToString();
-
-            default:
-                throw new ArgumentException("Unsupported format " + format, nameof(format));
-
-        }
-
+        return format switch {
+            TimeFormat.Iso8601 => value.ToString(),
+            _ => throw new ArgumentException("Unsupported format " + format, nameof(format))
+        };
     }
+
 }

@@ -16,20 +16,11 @@ internal class EnumStringConverter<T> : JsonConverter<T> where T : Enum {
     }
 
     public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
-
-        switch (reader.TokenType) {
-
-            case JsonTokenType.Null:
-                return default;
-
-            case JsonTokenType.String:
-                return (T) EnumUtils.ParseEnum(reader.GetString()!, typeof(T));
-
-            default:
-                throw new Exception($"Unsupported token type: {reader.TokenType}");
-
-        }
-
+        return reader.TokenType switch {
+            JsonTokenType.Null => default,
+            JsonTokenType.String => (T) EnumUtils.ParseEnum(reader.GetString()!, typeof(T)),
+            _ => throw new Exception($"Unsupported token type: {reader.TokenType}")
+        };
     }
 
     public override void Write(Utf8JsonWriter writer, T? value, JsonSerializerOptions options) {

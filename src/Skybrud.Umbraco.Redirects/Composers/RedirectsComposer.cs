@@ -39,7 +39,7 @@ public class RedirectsComposer : IComposer {
 
         builder.ManifestFilters().Append<RedirectsManifestFilter>();
 
-        builder.ContentApps()?.Append<RedirectsContentAppFactory>();
+        builder.ContentApps().Append<RedirectsContentAppFactory>();
 
         builder.AddNotificationHandler<ServerVariablesParsingNotification, ServerVariablesParsingHandler>();
         builder.AddNotificationHandler<UmbracoApplicationStartingNotification, UmbracoApplicationStartingHandler>();
@@ -56,7 +56,7 @@ public class RedirectsComposer : IComposer {
             ));
         });
 
-        builder.DataValueReferenceFactories()?.Append<OutboundRedirectReferenceFactory>();
+        builder.DataValueReferenceFactories().Append<OutboundRedirectReferenceFactory>();
 
         ConfigureDashboard(builder);
 

@@ -10,14 +10,14 @@ namespace Skybrud.Umbraco.Redirects.Models;
 public interface IRedirectDestination {
 
     /// <summary>
-    /// Gets the ID of the selected content or media. If an URL has been selected, this will return <c>0</c>.
+    /// Gets the ID of the selected content or media. If a URL has been selected, this will return <c>0</c>.
     /// </summary>
     [JsonProperty("id")]
     [JsonPropertyName("id")]
     int Id { get; set; }
 
     /// <summary>
-    /// Gets the GUID key of the selected content or media. If an URL has been selected, this will return <c>null</c>.
+    /// Gets the GUID key of the selected content or media. If a URL has been selected, this will return <c>null</c>.
     /// </summary>
     [JsonProperty("key")]
     [JsonPropertyName("key")]
@@ -45,7 +45,7 @@ public interface IRedirectDestination {
     string Query { get; set; }
 
     /// <summary>
-    /// Gets the fragment of the destination - eg. <c>#hello</c>.
+    /// Gets the fragment of the destination - e.g. <c>#hello</c>.
     /// </summary>
     [JsonProperty("fragment")]
     [JsonPropertyName("fragment")]

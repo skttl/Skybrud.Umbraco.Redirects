@@ -16,7 +16,7 @@ public class RedirectsManifestFilter : IManifestFilter {
             Version = RedirectsPackage.InformationalVersion.Split('+')[0],
             PackageId = RedirectsPackage.Alias,
             BundleOptions = BundleOptions.Independent,
-            Scripts = new[] {
+            Scripts = [
                 $"/App_Plugins/{RedirectsPackage.Alias}/Scripts/Services/RedirectsService.js",
                 $"/App_Plugins/{RedirectsPackage.Alias}/Scripts/Controllers/Dashboards/Default.js",
                 $"/App_Plugins/{RedirectsPackage.Alias}/Scripts/Controllers/Dialogs/Redirect.js",
@@ -30,10 +30,10 @@ public class RedirectsManifestFilter : IManifestFilter {
                 $"/App_Plugins/{RedirectsPackage.Alias}/Scripts/Controllers/Editors/Timestamp.js",
                 $"/App_Plugins/{RedirectsPackage.Alias}/Scripts/Controllers/ContentApp.js",
                 $"/App_Plugins/{RedirectsPackage.Alias}/Scripts/Controllers/Directives/Node.js"
-            },
-            Stylesheets = new[] {
+            ],
+            Stylesheets = [
                 $"/App_Plugins/{RedirectsPackage.Alias}/Styles/Styles.css"
-            }
+            ]
         };
 
         // Append the manifest

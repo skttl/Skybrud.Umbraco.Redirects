@@ -65,7 +65,7 @@ public interface IRedirectsService {
     /// Returns the redirect matching the specified <paramref name="path"/> and <paramref name="query"/>, or <c>null</c> if not redirect is found.
     /// </summary>
     /// <param name="rootNodeKey">The GUID of the root/side node. Use <see cref="Guid.Empty"/> for a global redirect.</param>
-    /// <param name="path">The path of the inbound inbound request.</param>
+    /// <param name="path">The path of the inbound request.</param>
     /// <param name="query">The query string of the inbound request.</param>
     /// <returns>An instance of <see cref="IRedirect"/>, or <c>null</c> if no matching redirect found.</returns>
     IRedirect? GetRedirectByPathAndQuery(Guid rootNodeKey, string path, string? query);
