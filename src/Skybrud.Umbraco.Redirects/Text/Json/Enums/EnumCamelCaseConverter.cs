@@ -2,12 +2,10 @@
 
 #pragma warning disable 1591
 
-namespace Skybrud.Umbraco.Redirects.Text.Json.Enums {
+namespace Skybrud.Umbraco.Redirects.Text.Json.Enums;
 
-    public class EnumCamelCaseConverter : EnumStringConverter {
+public class EnumCamelCaseConverter : EnumStringConverter {
 
-        public EnumCamelCaseConverter() : base(TextCasing.CamelCase) { }
-
-    }
+    public EnumCamelCaseConverter() : base(TextCasing.CamelCase) { }
 
 }

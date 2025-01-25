@@ -6,41 +6,39 @@ using Umbraco.Cms.Core.Services;
 
 #pragma warning disable 1591
 
-namespace Skybrud.Umbraco.Redirects.PropertyEditors {
+namespace Skybrud.Umbraco.Redirects.PropertyEditors;
 
-    [DataEditor(EditorAlias, EditorType.PropertyValue, EditorName, EditorView, ValueType = ValueTypes.Json, Group = "Skybrud.dk", Icon = "icon-arrow-right color-skybrud")]
-    public class InboundRedirectsEditor : DataEditor {
+[DataEditor(EditorAlias, EditorType.PropertyValue, EditorName, EditorView, ValueType = ValueTypes.Json, Group = "Skybrud.dk", Icon = "icon-arrow-right color-skybrud")]
+public class InboundRedirectsEditor : DataEditor {
 
-        internal const string EditorAlias = "Skybrud.Umbraco.Redirects";
+    internal const string EditorAlias = "Skybrud.Umbraco.Redirects";
 
-        internal const string EditorName = "Skybrud.dk - Inbound redirects";
+    internal const string EditorName = "Skybrud.dk - Inbound redirects";
 
-        internal const string EditorView = "/App_Plugins/Skybrud.Umbraco.Redirects/Views/Editors/Inbound.html";
+    internal const string EditorView = "/App_Plugins/Skybrud.Umbraco.Redirects/Views/Editors/Inbound.html";
 
-        private readonly IIOHelper _ioHelper;
-        private readonly IEditorConfigurationParser _editorConfigurationParser;
-        private readonly RedirectsBackOfficeHelper _backOfficeHelper;
+    private readonly IIOHelper _ioHelper;
+    private readonly IEditorConfigurationParser _editorConfigurationParser;
+    private readonly RedirectsBackOfficeHelper _backOfficeHelper;
 
-        public InboundRedirectsEditor(IIOHelper ioHelper, IEditorConfigurationParser editorConfigurationParser, IDataValueEditorFactory dataValueEditorFactory, RedirectsBackOfficeHelper backOfficeHelper) : base(dataValueEditorFactory) {
-            _ioHelper = ioHelper;
-            _editorConfigurationParser = editorConfigurationParser;
-            _backOfficeHelper = backOfficeHelper;
+    public InboundRedirectsEditor(IIOHelper ioHelper, IEditorConfigurationParser editorConfigurationParser, IDataValueEditorFactory dataValueEditorFactory, RedirectsBackOfficeHelper backOfficeHelper) : base(dataValueEditorFactory) {
+        _ioHelper = ioHelper;
+        _editorConfigurationParser = editorConfigurationParser;
+        _backOfficeHelper = backOfficeHelper;
+    }
+
+    protected override IConfigurationEditor CreateConfigurationEditor() => new InboundRedirectsConfigurationEditor(_ioHelper, _editorConfigurationParser);
+
+    public override IDataValueEditor GetValueEditor(object? configuration) {
+
+        IDataValueEditor editor = base.GetValueEditor(configuration);
+
+        if (editor is DataValueEditor dve) {
+            dve.View += $"?v={_backOfficeHelper.GetCacheBuster()}";
+            dve.HideLabel = configuration is InboundRedirectsConfiguration {HideLabel: true};
         }
 
-        protected override IConfigurationEditor CreateConfigurationEditor() => new InboundRedirectsConfigurationEditor(_ioHelper, _editorConfigurationParser);
-
-        public override IDataValueEditor GetValueEditor(object? configuration) {
-
-            IDataValueEditor editor = base.GetValueEditor(configuration);
-
-            if (editor is DataValueEditor dve) {
-                dve.View += $"?v={_backOfficeHelper.GetCacheBuster()}";
-                dve.HideLabel = configuration is InboundRedirectsConfiguration {HideLabel: true};
-            }
-
-            return editor;
-
-        }
+        return editor;
 
     }
 

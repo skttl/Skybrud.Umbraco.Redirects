@@ -1,28 +1,26 @@
 ﻿using Newtonsoft.Json;
 
-namespace Skybrud.Umbraco.Redirects.Models.Outbound {
+namespace Skybrud.Umbraco.Redirects.Models.Outbound;
+
+/// <summary>
+/// Interface describing an outbound redirect.
+/// </summary>
+public interface IOutboundRedirect : IRedirectBase {
+
+    #region Properties
 
     /// <summary>
-    /// Interface describing an outbound redirect.
+    /// Same as <see cref="IsValid"/>.
     /// </summary>
-    public interface IOutboundRedirect : IRedirectBase {
+    [JsonIgnore]
+    public bool HasDestination => IsValid;
 
-        #region Properties
+    /// <summary>
+    /// Gets whether the redirects has a valid link.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsValid => Destination is { IsValid: true };
 
-        /// <summary>
-        /// Same as <see cref="IsValid"/>.
-        /// </summary>
-        [JsonIgnore]
-        public bool HasDestination => IsValid;
-
-        /// <summary>
-        /// Gets whether the redirects has a valid link.
-        /// </summary>
-        [JsonIgnore]
-        public bool IsValid => Destination is { IsValid: true };
-
-        #endregion
-
-    }
+    #endregion
 
 }

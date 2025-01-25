@@ -5,27 +5,25 @@ using Umbraco.Cms.Core.Notifications;
 
 #pragma warning disable 1591
 
-namespace Skybrud.Umbraco.Redirects.Notifications.Handlers {
+namespace Skybrud.Umbraco.Redirects.Notifications.Handlers;
 
-    public class ServerVariablesParsingHandler : INotificationHandler<ServerVariablesParsingNotification> {
+public class ServerVariablesParsingHandler : INotificationHandler<ServerVariablesParsingNotification> {
 
-        private readonly RedirectsBackOfficeHelper _backoffice;
+    private readonly RedirectsBackOfficeHelper _backoffice;
 
-        public ServerVariablesParsingHandler(RedirectsBackOfficeHelper backoffice) {
-            _backoffice = backoffice;
+    public ServerVariablesParsingHandler(RedirectsBackOfficeHelper backoffice) {
+        _backoffice = backoffice;
+    }
+
+    public void Handle(ServerVariablesParsingNotification notification) {
+
+        // Get or create the "skybrud" dictionary
+        if (!(notification.ServerVariables.TryGetValue("skybrud", out object? value) && value is Dictionary<string, object> skybrud))  {
+            notification.ServerVariables["skybrud"] = skybrud = new Dictionary<string, object>();
         }
 
-        public void Handle(ServerVariablesParsingNotification notification) {
-
-            // Get or create the "skybrud" dictionary
-            if (!(notification.ServerVariables.TryGetValue("skybrud", out object? value) && value is Dictionary<string, object> skybrud))  {
-                notification.ServerVariables["skybrud"] = skybrud = new Dictionary<string, object>();
-            }
-
-            // Append the "redirects" dictionary to "skybrud"
-            skybrud.Add("redirects", _backoffice.GetServerVariables());
-
-        }
+        // Append the "redirects" dictionary to "skybrud"
+        skybrud.Add("redirects", _backoffice.GetServerVariables());
 
     }
 

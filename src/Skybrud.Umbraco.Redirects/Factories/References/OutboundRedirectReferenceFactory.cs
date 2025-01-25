@@ -12,56 +12,54 @@ using Umbraco.Extensions;
 
 // ReSharper disable SwitchStatementMissingSomeEnumCasesNoDefault
 
-namespace Skybrud.Umbraco.Redirects.Factories.References {
+namespace Skybrud.Umbraco.Redirects.Factories.References;
 
-    public class OutboundRedirectReferenceFactory : IDataValueReferenceFactory, IDataValueReference {
+public class OutboundRedirectReferenceFactory : IDataValueReferenceFactory, IDataValueReference {
 
-        private readonly RedirectsModelsFactory _modelsFactory;
+    private readonly RedirectsModelsFactory _modelsFactory;
 
-        #region Constructors
+    #region Constructors
 
-        public OutboundRedirectReferenceFactory(RedirectsModelsFactory modelsFactory)  {
-            _modelsFactory = modelsFactory;
-        }
+    public OutboundRedirectReferenceFactory(RedirectsModelsFactory modelsFactory) {
+        _modelsFactory = modelsFactory;
+    }
 
-        #endregion
+    #endregion
 
-        #region Member methods
+    #region Member methods
 
-        public IDataValueReference GetDataValueReference() => this;
+    public IDataValueReference GetDataValueReference() => this;
 
-        public IEnumerable<UmbracoEntityReference> GetReferences(object? value) {
+    public IEnumerable<UmbracoEntityReference> GetReferences(object? value) {
 
-            List<UmbracoEntityReference> references = new();
-            if (value is not string json) return references;
+        List<UmbracoEntityReference> references = new();
+        if (value is not string json) return references;
 
-            // Parse the raw JSON value
-            if (!JsonUtils.TryParseJsonObject(json, out JObject? result)) return references;
+        // Parse the raw JSON value
+        if (!JsonUtils.TryParseJsonObject(json, out JObject? result)) return references;
 
-            // Parse the JSON object into a "IRedirectDestination" via the models factory
-            IRedirectDestination? destination = _modelsFactory.CreateOutboundRedirect(result)?.Destination;
+        // Parse the JSON object into a "IRedirectDestination" via the models factory
+        IRedirectDestination? destination = _modelsFactory.CreateOutboundRedirect(result)?.Destination;
 
-            // Handle "Media" and "Content" (but not "Url")
-            switch (destination?.Type) {
+        // Handle "Media" and "Content" (but not "Url")
+        switch (destination?.Type) {
 
-                case RedirectDestinationType.Media:
-                    references.Add(new UmbracoEntityReference(new GuidUdi(Constants.UdiEntityType.Media, destination.Key)));
-                    break;
+            case RedirectDestinationType.Media:
+                references.Add(new UmbracoEntityReference(new GuidUdi(Constants.UdiEntityType.Media, destination.Key)));
+                break;
 
-                case RedirectDestinationType.Content:
-                    references.Add(new UmbracoEntityReference(new GuidUdi(Constants.UdiEntityType.Document, destination.Key)));
-                    break;
-
-            }
-
-            return references;
+            case RedirectDestinationType.Content:
+                references.Add(new UmbracoEntityReference(new GuidUdi(Constants.UdiEntityType.Document, destination.Key)));
+                break;
 
         }
 
-        public bool IsForEditor(IDataEditor? dataEditor) => dataEditor is not null && dataEditor.Alias.InvariantEquals(OutboundRedirectEditor.EditorAlias);
-
-        #endregion
+        return references;
 
     }
+
+    public bool IsForEditor(IDataEditor? dataEditor) => dataEditor is not null && dataEditor.Alias.InvariantEquals(OutboundRedirectEditor.EditorAlias);
+
+    #endregion
 
 }

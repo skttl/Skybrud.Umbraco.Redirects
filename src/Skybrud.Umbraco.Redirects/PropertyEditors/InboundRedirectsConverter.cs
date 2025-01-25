@@ -5,30 +5,28 @@ using Umbraco.Cms.Core.PropertyEditors;
 
 #pragma warning disable 1591
 
-namespace Skybrud.Umbraco.Redirects.PropertyEditors {
+namespace Skybrud.Umbraco.Redirects.PropertyEditors;
 
-    public class InboundRedirectsConverter : PropertyValueConverterBase {
+public class InboundRedirectsConverter : PropertyValueConverterBase {
 
-        public override bool IsConverter(IPublishedPropertyType propertyType) {
-            return propertyType.EditorAlias == InboundRedirectsEditor.EditorAlias;
-        }
+    public override bool IsConverter(IPublishedPropertyType propertyType) {
+        return propertyType.EditorAlias == InboundRedirectsEditor.EditorAlias;
+    }
 
-        public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {
-            return source;
-        }
+    public override object? ConvertSourceToIntermediate(IPublishedElement owner, IPublishedPropertyType propertyType, object? source, bool preview) {
+        return source;
+    }
 
-        public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) {
-            return new InboundRedirects();
-        }
+    public override object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object? inter, bool preview) {
+        return new InboundRedirects();
+    }
 
-        public override Type GetPropertyValueType(IPublishedPropertyType propertyType) {
-            return typeof(InboundRedirects);
-        }
+    public override Type GetPropertyValueType(IPublishedPropertyType propertyType) {
+        return typeof(InboundRedirects);
+    }
 
-        public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) {
-            return PropertyCacheLevel.Element;
-        }
-
+    public override PropertyCacheLevel GetPropertyCacheLevel(IPublishedPropertyType propertyType) {
+        return PropertyCacheLevel.Element;
     }
 
 }

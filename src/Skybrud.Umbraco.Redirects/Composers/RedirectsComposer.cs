@@ -19,59 +19,57 @@ using Umbraco.Extensions;
 
 #pragma warning disable 1591
 
-namespace Skybrud.Umbraco.Redirects.Composers {
+namespace Skybrud.Umbraco.Redirects.Composers;
 
-    public class RedirectsComposer : IComposer {
+public class RedirectsComposer : IComposer {
 
-        public void Compose(IUmbracoBuilder builder) {
+    public void Compose(IUmbracoBuilder builder) {
 
-            builder.Services.AddOptions<RedirectsSettings>()
-                .Bind(builder.Config.GetSection("Skybrud:Redirects"), o => o.BindNonPublicProperties = true)
-                .ValidateDataAnnotations();
+        builder.Services.AddOptions<RedirectsSettings>()
+            .Bind(builder.Config.GetSection("Skybrud:Redirects"), o => o.BindNonPublicProperties = true)
+            .ValidateDataAnnotations();
 
-            builder.Services.AddSingleton<RedirectsServiceDependencies>();
-            builder.Services.AddSingleton<RedirectsBackOfficeHelperDependencies>();
+        builder.Services.AddSingleton<RedirectsServiceDependencies>();
+        builder.Services.AddSingleton<RedirectsBackOfficeHelperDependencies>();
 
-            builder.Services.AddUnique<IRedirectsService, RedirectsService>();
-            builder.Services.AddSingleton<RedirectsBackOfficeHelper>();
+        builder.Services.AddUnique<IRedirectsService, RedirectsService>();
+        builder.Services.AddSingleton<RedirectsBackOfficeHelper>();
 
-            builder.Services.AddSingleton<RedirectsModelsFactory>();
+        builder.Services.AddSingleton<RedirectsModelsFactory>();
 
-            builder.ManifestFilters().Append<RedirectsManifestFilter>();
+        builder.ManifestFilters().Append<RedirectsManifestFilter>();
 
-            builder.ContentApps()?.Append<RedirectsContentAppFactory>();
+        builder.ContentApps()?.Append<RedirectsContentAppFactory>();
 
-            builder.AddNotificationHandler<ServerVariablesParsingNotification, ServerVariablesParsingHandler>();
-            builder.AddNotificationHandler<UmbracoApplicationStartingNotification, UmbracoApplicationStartingHandler>();
+        builder.AddNotificationHandler<ServerVariablesParsingNotification, ServerVariablesParsingHandler>();
+        builder.AddNotificationHandler<UmbracoApplicationStartingNotification, UmbracoApplicationStartingHandler>();
 
-            builder.Services.Configure<UmbracoPipelineOptions>(options => {
-                options.AddFilter(new UmbracoPipelineFilter(
-                    "SkybrudRedirects",
-                    _ => { },
-                    _ => { },
-                    applicationBuilder => {
-                        applicationBuilder.UseMiddleware<RedirectsMiddleware>();
-                    },
-                    _ => { }
-                ));
-            });
+        builder.Services.Configure<UmbracoPipelineOptions>(options => {
+            options.AddFilter(new UmbracoPipelineFilter(
+                "SkybrudRedirects",
+                _ => { },
+                _ => { },
+                applicationBuilder => {
+                    applicationBuilder.UseMiddleware<RedirectsMiddleware>();
+                },
+                _ => { }
+            ));
+        });
 
-            builder.DataValueReferenceFactories()?.Append<OutboundRedirectReferenceFactory>();
+        builder.DataValueReferenceFactories()?.Append<OutboundRedirectReferenceFactory>();
 
-            ConfigureDashboard(builder);
+        ConfigureDashboard(builder);
 
-        }
+    }
 
-        private static void ConfigureDashboard(IUmbracoBuilder builder) {
+    private static void ConfigureDashboard(IUmbracoBuilder builder) {
 
-            // The dashboard should be enabled by default, but if explicitly set to "false", we should remove it
-            bool dashboardEnabled = builder.Config
-                .GetSection("Skybrud:Redirects:Dashboard:Enabled").Value
-                .ToBoolean(true);
+        // The dashboard should be enabled by default, but if explicitly set to "false", we should remove it
+        bool dashboardEnabled = builder.Config
+            .GetSection("Skybrud:Redirects:Dashboard:Enabled").Value
+            .ToBoolean(true);
 
-            if (!dashboardEnabled) builder.Dashboards().Remove<RedirectsDashboard>();
-
-        }
+        if (!dashboardEnabled) builder.Dashboards().Remove<RedirectsDashboard>();
 
     }
 

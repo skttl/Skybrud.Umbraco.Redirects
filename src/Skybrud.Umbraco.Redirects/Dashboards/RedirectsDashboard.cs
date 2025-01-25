@@ -3,24 +3,22 @@ using Umbraco.Cms.Core.Dashboards;
 
 #pragma warning disable 1591
 
-namespace Skybrud.Umbraco.Redirects.Dashboards {
+namespace Skybrud.Umbraco.Redirects.Dashboards;
 
-    public class RedirectsDashboard : IDashboard {
+public class RedirectsDashboard : IDashboard {
 
-        private readonly RedirectsBackOfficeHelper _backoffice;
+    private readonly RedirectsBackOfficeHelper _backoffice;
 
-        public string Alias => "redirects";
+    public string Alias => "redirects";
 
-        public string[] Sections => new[] { "content" };
+    public string[] Sections => new[] { "content" };
 
-        public string View => $"/App_Plugins/Skybrud.Umbraco.Redirects/Views/Dashboard.html?v={_backoffice.GetCacheBuster()}";
+    public string View => $"/App_Plugins/Skybrud.Umbraco.Redirects/Views/Dashboard.html?v={_backoffice.GetCacheBuster()}";
 
-        public IAccessRule[] AccessRules => _backoffice.GetDashboardAccessRules();
+    public IAccessRule[] AccessRules => _backoffice.GetDashboardAccessRules();
 
-        public RedirectsDashboard(RedirectsBackOfficeHelper backoffice) {
-            _backoffice = backoffice;
-        }
-
+    public RedirectsDashboard(RedirectsBackOfficeHelper backoffice) {
+        _backoffice = backoffice;
     }
 
 }

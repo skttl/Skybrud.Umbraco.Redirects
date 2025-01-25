@@ -1,15 +1,13 @@
 ﻿using Umbraco.Cms.Infrastructure.Migrations;
 
-namespace Skybrud.Umbraco.Redirects.Migrations {
+namespace Skybrud.Umbraco.Redirects.Migrations;
 
-    internal class DummyMigration  : MigrationBase {
+internal class DummyMigration : MigrationBase {
 
-        // Dummy migration class because I messed up the migration plan (╯°□°)╯︵ ┻━┻
+    // Dummy migration class because I messed up the migration plan (╯°□°)╯︵ ┻━┻
 
-        public DummyMigration(IMigrationContext context) : base(context) { }
+    public DummyMigration(IMigrationContext context) : base(context) { }
 
-        protected override void Migrate() { }
-
-    }
+    protected override void Migrate() { }
 
 }
