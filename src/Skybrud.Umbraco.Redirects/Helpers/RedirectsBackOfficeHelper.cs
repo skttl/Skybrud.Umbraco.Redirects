@@ -239,6 +239,7 @@ public class RedirectsBackOfficeHelper {
         Dictionary<Guid, IContent> contentLookup, Dictionary<Guid, IMedia> mediaLookup, Dictionary<string, ILanguage> languageLookup)
     {
 
+
         string backOfficeBaseUrl = Dependencies.GlobalSettings.GetBackOfficePath(Dependencies.HostingEnvironment);
 
         ApiRootNode? rootNode = null;
@@ -262,6 +263,7 @@ public class RedirectsBackOfficeHelper {
                         .GetAssignedDomains(content.Id, false)
                         .Select(x => new RedirectDomain(x));
                     rn = new RedirectRootNode(content, domains);
+
                 }
 
                 rootNode = CreateRootNode(rn);
@@ -270,6 +272,15 @@ public class RedirectsBackOfficeHelper {
 
             }
 
+        }
+
+        string? inboundBaseUrl;
+        if (redirect.RootKey != Guid.Empty && Dependencies.UmbracoContextAccessor.TryGetUmbracoContext(out IUmbracoContext? context)) {
+            inboundBaseUrl = context.Content?.GetById(redirect.RootKey)?.Url(mode: UrlMode.Absolute).TrimEnd('/');
+        } else if (!string.IsNullOrWhiteSpace(Dependencies.RedirectsSettings.Value.FrontendUrl)) {
+            inboundBaseUrl = Dependencies.RedirectsSettings.Value.FrontendUrl.TrimEnd('/');
+        } else {
+            inboundBaseUrl = null;
         }
 
         RedirectDestinationModel destination;
@@ -336,7 +347,9 @@ public class RedirectsBackOfficeHelper {
 
         }
 
-        return new RedirectModel(redirect, rootNode, destination);
+        return new RedirectModel(redirect, rootNode, destination) {
+            Url = inboundBaseUrl + redirect.Url
+        };
 
     }
 
