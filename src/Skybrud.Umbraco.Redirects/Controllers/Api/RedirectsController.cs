@@ -43,7 +43,8 @@ public class RedirectsController : UmbracoAuthorizedApiController {
 
     #region Constructors
 
-    public RedirectsController(ILogger<RedirectsController> logger, IRedirectsService redirectsService, RedirectsBackOfficeHelper backOffice,
+    public RedirectsController(ILogger<RedirectsController> logger, IRedirectsService redirectsService,
+        RedirectsBackOfficeHelper backOffice,
         IContentService contentService,
         IMediaService mediaService,
         IUmbracoContextAccessor umbracoContextAccessor, ILocalizationService localizationService, ILocalizedTextService localizedTextService) {
@@ -89,14 +90,8 @@ public class RedirectsController : UmbracoAuthorizedApiController {
     /// </summary>
     [HttpGet]
     public ActionResult GetRootNodes() {
-
         RedirectRootNode[] rootNodes = _redirects.GetRootNodes();
-
-        return new JsonResult(new {
-            total = rootNodes.Length,
-            items = rootNodes.Select(x => new RedirectRootNodeModel(x, _backOffice))
-        });
-
+        return new JsonResult(_backOffice.CreateRootNodeList(rootNodes));
     }
 
     [HttpPost]

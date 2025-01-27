@@ -48,12 +48,33 @@ public class RedirectRootNode {
     [JsonPropertyName("domains")]
     public string[] Domains { get; }
 
-    private RedirectRootNode(IContent content, IEnumerable<RedirectDomain>? domains) {
+    /// <summary>
+    /// Initializes a new instance based on the specified <paramref name="content"/> and <paramref name="domains"/>.
+    /// </summary>
+    /// <param name="content">An instance of <see cref="IContent"/> representing the root node.</param>
+    /// <param name="domains">A list of domains associated with the root node.</param>
+    public RedirectRootNode(IContent content, IEnumerable<RedirectDomain>? domains) {
         Id = content.Id;
         Key = content.Key;
         Name = content.Name!;
         Icon = content.ContentType.Icon!;
-        Domains = domains?.Select(x => x.Name).ToArray() ?? Array.Empty<string>();
+        Domains = domains?.Select(x => x.Name).ToArray() ?? [];
+    }
+
+    /// <summary>
+    /// Initializes a new instance based on the specified parameters.
+    /// </summary>
+    /// <param name="id">The ID of the root node.</param>
+    /// <param name="key">The GUID key of the root node.</param>
+    /// <param name="name">The name of the root node.</param>
+    /// <param name="icon">The icon of the root node.</param>
+    /// <param name="domains">A list of domains associated with the root node.</param>
+    public RedirectRootNode(int id, Guid key, string name, string icon, IEnumerable<RedirectDomain>? domains) {
+        Id = id;
+        Key = key;
+        Name = name;
+        Icon = icon;
+        Domains = domains?.Select(x => x.Name).ToArray() ?? [];
     }
 
     /// <summary>

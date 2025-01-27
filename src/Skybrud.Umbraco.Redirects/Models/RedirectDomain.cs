@@ -46,7 +46,11 @@ public class RedirectDomain {
 
     #region Constructors
 
-    private RedirectDomain(IDomain domain) {
+    /// <summary>
+    /// Initializes a new instanced based on the specified <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">An instance of <see cref="IDomain"/> to wrap.</param>
+    public RedirectDomain(IDomain domain) {
         Domain = domain;
         Id = domain.Id;
         Name = domain.DomainName;

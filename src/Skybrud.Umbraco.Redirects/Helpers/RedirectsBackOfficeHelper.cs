@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using Skybrud.Essentials.Collections.Extensions;
 using Skybrud.Essentials.Reflection;
 using Skybrud.Essentials.Strings.Extensions;
 using Skybrud.Umbraco.Redirects.Config;
 using Skybrud.Umbraco.Redirects.Dashboards;
 using Skybrud.Umbraco.Redirects.Models;
 using Skybrud.Umbraco.Redirects.Models.Api;
+using Skybrud.Umbraco.Redirects.Services;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Dashboards;
 using Umbraco.Cms.Core.Models;
@@ -79,6 +81,29 @@ public class RedirectsBackOfficeHelper {
     #endregion
 
     #region Member methods
+
+    /// <summary>
+    /// Creates and returns a new <see cref="ApiRootNode"/> based on the specified
+    /// <paramref name="rootNode"/>.
+    ///
+    /// The purpose of this method is to take a root node from the <see cref="IRedirectsService.GetRootNodes"/>
+    /// method and wrap it in a model that can be returned in the back-office API.
+    /// </summary>
+    /// <param name="rootNode">The root node.</param>
+    /// <returns>An instance of <see cref="ApiRootNode"/>.</returns>
+    public virtual ApiRootNode CreateRootNode(RedirectRootNode rootNode) {
+        return new ApiRootNode(rootNode);
+    }
+
+    /// <summary>
+    /// Creates and returns a new <see cref="ApiRootNodeList"/> based on the specified <paramref name="rootNodes"/>.
+    /// </summary>
+    /// <param name="rootNodes">The root nodes.</param>
+    /// <returns>An instance of <see cref="ApiRootNodeList"/>.</returns>
+    public virtual ApiRootNodeList CreateRootNodeList(IReadOnlyList<RedirectRootNode> rootNodes) {
+        List<ApiRootNode> items = rootNodes.SelectList(CreateRootNode);
+        return new ApiRootNodeList(items);
+    }
 
     /// <summary>
     /// Returns the localized value for the key with the specified <paramref name="alias"/> within the <c>redirects</c> area.
@@ -172,7 +197,7 @@ public class RedirectsBackOfficeHelper {
     /// <returns>An instance of <see cref="object"/>.</returns>
     public virtual object Map(RedirectsSearchResult result) {
 
-        Dictionary<Guid, RedirectRootNodeModel> rootNodeLookup = new();
+        Dictionary<Guid, ApiRootNode> rootNodeLookup = new();
         Dictionary<Guid, IContent> contentLookup = new();
         Dictionary<Guid, IMedia> mediaLookup = new();
         Dictionary<string, ILanguage> languageLookup = new();
@@ -190,7 +215,7 @@ public class RedirectsBackOfficeHelper {
     /// <param name="redirect">The redirect to be mapped.</param>
     /// <returns>An instance of <see cref="RedirectModel"/>.</returns>
     public virtual RedirectModel Map(IRedirect redirect)  {
-        Dictionary<Guid, RedirectRootNodeModel> rootNodeLookup = new();
+        Dictionary<Guid, ApiRootNode> rootNodeLookup = new();
         Dictionary<Guid, IContent> contentLookup = new();
         Dictionary<Guid, IMedia> mediaLookup = new();
         Dictionary<string, ILanguage> languageLookup = new();
@@ -203,20 +228,20 @@ public class RedirectsBackOfficeHelper {
     /// <param name="redirects">The collection of redirects to be mapped.</param>
     /// <returns>A collection of <see cref="RedirectModel"/>.</returns>
     public virtual IEnumerable<RedirectModel> Map(IEnumerable<IRedirect> redirects) {
-        Dictionary<Guid, RedirectRootNodeModel> rootNodeLookup = new();
+        Dictionary<Guid, ApiRootNode> rootNodeLookup = new();
         Dictionary<Guid, IContent> contentLookup = new();
         Dictionary<Guid, IMedia> mediaLookup = new();
         Dictionary<string, ILanguage> languageLookup = new();
         return redirects.Select(redirect => Map(redirect, rootNodeLookup, contentLookup, mediaLookup, languageLookup));
     }
 
-    private RedirectModel Map(IRedirect redirect, Dictionary<Guid, RedirectRootNodeModel> rootNodeLookup,
+    private RedirectModel Map(IRedirect redirect, Dictionary<Guid, ApiRootNode> rootNodeLookup,
         Dictionary<Guid, IContent> contentLookup, Dictionary<Guid, IMedia> mediaLookup, Dictionary<string, ILanguage> languageLookup)
     {
 
         string backOfficeBaseUrl = Dependencies.GlobalSettings.GetBackOfficePath(Dependencies.HostingEnvironment);
 
-        RedirectRootNodeModel? rootNode = null;
+        ApiRootNode? rootNode = null;
         if (redirect.RootKey != Guid.Empty) {
 
             if (!rootNodeLookup.TryGetValue(redirect.RootKey, out rootNode)) {
@@ -225,12 +250,26 @@ public class RedirectsBackOfficeHelper {
                     content = Dependencies.ContentService.GetById(redirect.RootKey);
                     if (content != null) contentLookup.Add(content.Key, content);
                 }
-                var domains = content == null ? null : Dependencies.DomainService.GetAssignedDomains(content.Id, false).Select(x => x.DomainName).ToArray();
-                rootNode = new RedirectRootNodeModel(redirect, content, domains, backOfficeBaseUrl);
+
+                // A bit hacky to first initialize a "RedirectRootNode" instance here, and then convert it to
+                // "RedirectRootNodeModel" right away, but this ensures that we call the "CreateRootNode" method here
+                // as well
+                RedirectRootNode rn;
+                if (content is null) {
+                    rn = new RedirectRootNode(0, redirect.RootKey, "Not found", "icon-alert color-red", null);
+                } else {
+                    var domains = Dependencies.DomainService
+                        .GetAssignedDomains(content.Id, false)
+                        .Select(x => new RedirectDomain(x));
+                    rn = new RedirectRootNode(content, domains);
+                }
+
+                rootNode = CreateRootNode(rn);
 
                 rootNodeLookup.Add(rootNode.Key, rootNode);
 
             }
+
         }
 
         RedirectDestinationModel destination;

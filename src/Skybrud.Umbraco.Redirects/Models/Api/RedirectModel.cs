@@ -22,7 +22,7 @@ public class RedirectModel {
 
     [JsonProperty("rootNode")]
     [JsonPropertyName("rootNode")]
-    public RedirectRootNodeModel? RootNode { get; }
+    public ApiRootNode? RootNode { get; }
 
     [JsonProperty("path")]
     [JsonPropertyName("path")]
@@ -62,7 +62,7 @@ public class RedirectModel {
     [JsonPropertyName("forward")]
     public bool ForwardQueryString => _redirect.ForwardQueryString;
 
-    public RedirectModel(IRedirect redirect, RedirectRootNodeModel? rootNode, RedirectDestinationModel destination) {
+    public RedirectModel(IRedirect redirect, ApiRootNode? rootNode, RedirectDestinationModel destination) {
         _redirect = redirect;
         RootNode = rootNode;
         Destination = destination;
