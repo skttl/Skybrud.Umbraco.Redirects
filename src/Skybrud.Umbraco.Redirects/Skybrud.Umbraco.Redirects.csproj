@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>13.0.5</VersionPrefix>
+    <VersionPrefix>13.0.6</VersionPrefix>
     <VersionSuffix Condition="'$(Configuration)'=='Debug'">build$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
     <Authors>Anders Bjerner</Authors>
     <Company>Limbo</Company>
@@ -53,10 +53,12 @@
     <None Include="wwwroot\Scripts/Intellisense.js" />
   </ItemGroup>
 
-  <!-- Include package icon and README for the NuGet -->
+  <!-- Include files outside the project -->
   <ItemGroup>
     <Content Include="../build/Limbo.png" Pack="true" PackagePath="\" />
     <None Include="..\..\NUGET.md" Pack="true" PackagePath="\" />
+    <Content Include="..\..\LICENSE.md" Pack="false" />
+    <Content Include="..\..\README.md" Pack="false" />
   </ItemGroup>
 
   <!-- Generate XML documentation -->
