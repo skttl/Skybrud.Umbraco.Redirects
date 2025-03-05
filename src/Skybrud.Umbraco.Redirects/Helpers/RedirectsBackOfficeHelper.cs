@@ -348,7 +348,7 @@ public class RedirectsBackOfficeHelper {
         }
 
         return new RedirectModel(redirect, rootNode, destination) {
-            Url = inboundBaseUrl + redirect.Url
+            FullUrl = inboundBaseUrl + redirect.Url
         };
 
     }

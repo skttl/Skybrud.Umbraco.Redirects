@@ -48,7 +48,7 @@
                             <span ng-hide="redirect.rootNode"><localize key="redirects_allSites">All sites</localize></span>
                         </td>
                         <td class="col-original">
-                            <a href="{{redirect.url}}" rel="noopener noreferrer" target="_blank" title="{{redirect.path}}{{redirect.queryString ? '?' + redirect.queryString : ''}}">{{redirect.path}}{{redirect.queryString ? '?' + redirect.queryString : ''}}</a>
+                            <a href="{{redirect.fullUrl}}" rel="noopener noreferrer" target="_blank" title="{{redirect.path}}{{redirect.queryString ? '?' + redirect.queryString : ''}}">{{redirect.path}}{{redirect.queryString ? '?' + redirect.queryString : ''}}</a>
                         </td>
                         <td class="col-arrow">
                             <i class="umb-table-body__icon umb-table-body__fileicon icon-arrow-right" style="font-size: 12px; line-height: 1;"></i>
