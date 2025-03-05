@@ -74,7 +74,7 @@ For the Umbraco 7 version of this package, see the [**v1/main**](https://github.
 
 - Property editor that can be added to either a content item or media item to show inbound redirects
 
-- Package only handles custom redirecs - eg. added manually by an editor. The package will let Umbraco 7.5+ handle redirects for renamed pages
+- Package only handles custom redirecs - e.g. added manually by an editor. The package will let Umbraco 7.5+ handle redirects for renamed pages
 
 - Includes a `RedirectsService` for managing the redirects from your own code
 
