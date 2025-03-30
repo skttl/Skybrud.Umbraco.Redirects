@@ -24,7 +24,7 @@
     <PackageId>Skybrud.Umbraco.Redirects</PackageId>
     <PackageTags>Umbraco, Redirects, Redirect, 301, 307, Content, Url, Skybrud, Limbo, Umbraco-Marketplace</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://packages.skybrud.dk/skybrud.umbraco.redirects/</PackageProjectUrl>
+    <PackageProjectUrl>https://packages.limbo.works/skybrud.umbraco.redirects/</PackageProjectUrl>
     <PackageIcon>Limbo.png</PackageIcon>
     <PackageReadmeFile>NUGET.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
