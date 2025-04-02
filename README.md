@@ -53,12 +53,12 @@ Install-Package Skybrud.Umbraco.Redirects -Version 13.0.8
 
 ### Other versions of Umbraco
 
-[**`v15/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v3/main) (Umbraco 15)
-[**`v14/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v3/main) (Umbraco 14)
-[**`v4/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v4/main) (Umbraco 10, 11 and 12)
-[**`v3/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v3/main) (Umbraco 9)
-[**`v2/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v2/main) (Umbraco 8)
-[**`v1/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v1/main) (Umbraco 7)
+- [**`v15/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v3/main) (Umbraco 15)
+- [**`v14/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v3/main) (Umbraco 14)
+- [**`v4/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v4/main) (Umbraco 10, 11 and 12)
+- [**`v3/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v3/main) (Umbraco 9)
+- [**`v2/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v2/main) (Umbraco 8)
+- [**`v1/main`**](https://github.com/skybrud/Skybrud.Umbraco.Redirects/tree/v1/main) (Umbraco 7)
 
 
 
