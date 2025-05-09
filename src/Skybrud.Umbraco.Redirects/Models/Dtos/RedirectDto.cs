@@ -124,4 +124,17 @@ public class RedirectDto {
 
     #endregion
 
+    /// <summary>
+    /// Initializes a new instance with default values.
+    /// </summary>
+    public RedirectDto() { }
+
+    /// <summary>
+    /// Initializes a new instance with the specified GUID <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">The GUID key of the redirect.</param>
+    public RedirectDto(Guid key) {
+        Key = key;
+    }
+
 }

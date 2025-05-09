@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using Skybrud.Essentials.Time;
 
 namespace Skybrud.Umbraco.Redirects.Models.Options;
 
@@ -18,6 +19,12 @@ public class AddRedirectOptions {
     [JsonProperty("overwrite", DefaultValueHandling = DefaultValueHandling.Ignore)]
     [JsonPropertyName("overwrite")]
     public bool Overwrite { get; set; }
+
+    /// <summary>
+    /// Gets or sets the GUID key of the redirect. Unless you really want to set a specific key, you shouldn't set this property.
+    /// </summary>
+    [JsonProperty]
+    public Guid Key { get; set; } = Guid.Empty;
 
     /// <summary>
     /// Gets or set the root node ID of the redirect.
@@ -71,6 +78,20 @@ public class AddRedirectOptions {
     [JsonProperty("forward")]
     [JsonPropertyName("forward")]
     public bool ForwardQueryString { get; set; }
+
+    /// <summary>
+    /// Gets or sets the creation date. You only need set this if you explicitly set a creation date - e.g. during an import
+    /// </summary>
+    [JsonProperty("createDate")]
+    [JsonPropertyName("createDate")]
+    public EssentialsTime? CreateDate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the update date. You only need set this if you explicitly set a creation date - e.g. during an import
+    /// </summary>
+    [JsonProperty("updateDate")]
+    [JsonPropertyName("updateDate")]
+    public EssentialsTime? UpdateDate { get; set; }
 
     #endregion
 

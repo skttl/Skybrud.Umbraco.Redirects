@@ -176,11 +176,20 @@ public class Redirect : IRedirect {
     /// Initializes an empty redirect.
     /// </summary>
     public Redirect() {
-        Dto = new RedirectDto();
+        Dto = new RedirectDto(Guid.NewGuid());
         _destination = new RedirectDestination();
         _createDate = EssentialsTime.UtcNow;
         _updateDate = EssentialsTime.UtcNow;
-        Dto.Key = Guid.NewGuid();
+    }
+
+    /// <summary>
+    /// Initializes an empty redirect.
+    /// </summary>
+    public Redirect(Guid key) {
+        Dto = new RedirectDto(key);
+        _destination = new RedirectDestination();
+        _createDate = EssentialsTime.UtcNow;
+        _updateDate = EssentialsTime.UtcNow;
     }
 
     /// <summary>

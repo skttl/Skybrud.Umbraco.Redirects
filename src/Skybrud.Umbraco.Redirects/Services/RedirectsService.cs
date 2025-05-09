@@ -271,6 +271,10 @@ public class RedirectsService : IRedirectsService {
 
         if (options == null) throw new ArgumentNullException(nameof(options));
 
+        // Determine the GUID key of the new redirect. Ideally the input key should always be
+        // empty, meaning we will generate a new key here, but for imports, we can use the same key
+        Guid key = options.Key == Guid.Empty ? Guid.NewGuid() : options.Key;
+
         // Initialize the destination
         RedirectDestination destination = new() {
             Id = options.Destination.Id,
@@ -286,11 +290,11 @@ public class RedirectsService : IRedirectsService {
         };
 
         // Initialize the new redirect and populate the properties
-        Redirect item = new Redirect {
+        Redirect item = new Redirect(key) {
             RootKey = options.RootNodeKey,
             Url = options.OriginalUrl!,
-            CreateDate = EssentialsTime.UtcNow,
-            UpdateDate = EssentialsTime.UtcNow,
+            CreateDate = options.CreateDate ?? EssentialsTime.UtcNow,
+            UpdateDate = options.CreateDate ?? EssentialsTime.UtcNow,
             Type = options.Type,
             ForwardQueryString = options.ForwardQueryString
         }.SetDestination(destination);
