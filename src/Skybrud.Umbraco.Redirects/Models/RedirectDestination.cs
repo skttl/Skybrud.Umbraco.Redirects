@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Json.Extensions;
+using Skybrud.Essentials.Json.Newtonsoft.Extensions;
 using Skybrud.Essentials.Strings.Extensions;
 
 namespace Skybrud.Umbraco.Redirects.Models;

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Skybrud.Essentials.Json.Extensions;
+using Skybrud.Essentials.Json.Newtonsoft.Extensions;
 using Skybrud.Umbraco.Redirects.Models;
 using Skybrud.Umbraco.Redirects.Models.Outbound;
 using Umbraco.Cms.Core.Models.PublishedContent;
